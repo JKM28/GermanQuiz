@@ -5,41 +5,18 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { userSentence, expectedAnswer } = req.body;
+  const { userText } = req.body;
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-  const prompt = `
-  Is the student's sentence equivalent to the expected answer?
-  Reply only with "correct" or "wrong".
-
-  Student: "${userSentence}"
-  Expected: "${expectedAnswer}"
-  `;
+  const prompt = `Evaluate the student's German writing for grammar, vocabulary, and fluency. 
+  Give short feedback (1–2 sentences). Student text: "${userText}"`;
 
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const result = await model.generateContent(prompt);
-    const text = result.response.text().toLowerCase();
-
-    if (text.includes("correct")) {
-      return res.json({ feedback: "✅ Correct!" });
-    } else if (text.includes("wrong")) {
-      return res.json({ feedback: "❌ Wrong." });
-    } else {
-      // Fallback: direct string comparison
-      const normalized = (userSentence || "").trim().toLowerCase();
-      const correct = (expectedAnswer || "").trim().toLowerCase();
-      return res.json({
-        feedback: normalized === correct ? "✅ Correct!" : "❌ Wrong."
-      });
-    }
+    const feedback = result.response.text();
+    return res.json({ feedback });
   } catch (err) {
     console.error("Gemini error:", err);
-    // Fallback if Gemini API fails
-    const normalized = (userSentence || "").trim().toLowerCase();
-    const correct = (expectedAnswer || "").trim().toLowerCase();
-    return res.json({
-      feedback: normalized === correct ? "✅ Correct!" : "❌ Wrong (AI unavailable)."
-    });
+    return res.json({ feedback: "AI feedback unavailable." });
   }
 }
