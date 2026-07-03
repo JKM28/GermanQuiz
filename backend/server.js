@@ -1,3 +1,4 @@
+// server.js
 import 'dotenv/config';
 import express from "express";
 import cors from "cors";
@@ -12,6 +13,30 @@ app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
   next();
 });
+
+// Safely extract the first top-level JSON object from a string
+function extractFirstJsonObject(text) {
+  if (!text || typeof text !== "string") return null;
+  const start = text.indexOf('{');
+  if (start === -1) return null;
+
+  let depth = 0;
+  for (let i = start; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === '{') depth++;
+    else if (ch === '}') depth--;
+
+    if (depth === 0) {
+      const candidate = text.slice(start, i + 1);
+      try {
+        return JSON.parse(candidate);
+      } catch (e) {
+        // continue searching in case of nested garbage
+      }
+    }
+  }
+  return null;
+}
 
 // Helper to create a GoogleGenerativeAI instance and check key presence
 function createGenAI() {
@@ -51,9 +76,9 @@ app.post("/api/check-sentence", async (req, res) => {
 
   const genAI = createGenAI();
   const prompt = `
-Is the student's sentence equivalent to the expected answer?
-Reply only with "correct" or "wrong".
+You must reply with only one word: "correct" or "wrong". Do not add any other text, explanation, or metadata.
 
+Is the student's sentence equivalent to the expected answer?
 Student: "${userSentence}"
 Expected: "${expectedAnswer}"
   `;
@@ -106,11 +131,14 @@ app.post("/api/check-writing", async (req, res) => {
     });
   }
 
+  // Strong instruction to return only JSON and nothing else
   const gradingPrompt = `
+You must respond with valid JSON only. Do not add any text, commentary, metadata, or markdown fences.
+
 You are a supportive German language teacher grading a student's short written response.
 
-Question given to the student: "${questionPrompt || ""}"
-Grading criteria: ${rubric || "Use general criteria: length, relevance, grammar"}
+Question given to the student: "${(questionPrompt || "").replace(/\n/g, " ")}"
+Grading criteria: ${(rubric || "Use general criteria: length, relevance, grammar").replace(/\n/g, " ")}
 
 Student's response:
 """
@@ -118,7 +146,7 @@ ${userText}
 """
 
 Evaluate the response against the criteria. Be encouraging but honest about errors.
-Respond with ONLY valid JSON, no markdown code fences, no extra text, in exactly this shape:
+Respond with ONLY valid JSON in exactly this shape (use true/false for booleans):
 {"meets_length": true or false, "addresses_prompt": true or false, "grammar_ok": true or false, "feedback": "2-3 sentences of constructive feedback in English, written directly to the student, mentioning at least one specific strength and one specific thing to improve if applicable"}
 `;
 
@@ -133,14 +161,12 @@ Respond with ONLY valid JSON, no markdown code fences, no extra text, in exactly
     // strip accidental markdown fences just in case
     raw = raw.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim();
 
-    console.log("Gemini writing reply (raw):", raw);
+    console.log("AI raw output (writing):", raw);
 
-    // Parse JSON safely
-    let parsed;
-    try {
-      parsed = JSON.parse(raw);
-    } catch (parseErr) {
-      console.error("Failed to parse Gemini JSON response:", parseErr);
+    // Try to extract the first JSON object from the raw output
+    const parsed = extractFirstJsonObject(raw);
+    if (!parsed) {
+      console.error("Failed to extract JSON from AI response. Raw:", raw);
       throw new Error("Invalid JSON from AI");
     }
 
@@ -156,7 +182,9 @@ Respond with ONLY valid JSON, no markdown code fences, no extra text, in exactly
       passed: null,
       feedback: "Response saved. AI feedback is currently unavailable."
     };
-    if (process.env.DEBUG_SHOW_ERROR === "true") response.error = err && (err.message || String(err));
+    if (process.env.DEBUG_SHOW_ERROR === "true") {
+      response.error = err && (err.message || String(err));
+    }
     return res.status(200).json(response);
   }
 });
