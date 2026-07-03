@@ -19,4 +19,7 @@ export default async function handler(req, res) {
     console.error("Gemini error:", err);
     return res.status(200).json({ feedback: "AI feedback unavailable." });
   }
+  console.log("API key:", process.env.GEMINI_API_KEY ? "Loaded" : "Missing");
+console.log("Request body:", req.body);
+
 }
