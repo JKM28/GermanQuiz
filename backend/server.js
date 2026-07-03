@@ -17,10 +17,12 @@ app.use((req, res, next) => {
  * Helpers
  */
 
-// Remove any trailing edge_all_open_tabs or "# User's Edge" metadata and anything after it.
+// Remove any trailing edge_all_open_tabs or similar metadata and anything after it.
 function stripEdgeTabsMetadata(text) {
   if (!text || typeof text !== "string") return text;
-  // markers to cut at (case-insensitive)
+  const lower = text.toLowerCase();
+
+  // Common markers that have appeared in model outputs; cut at the earliest occurrence.
   const markers = [
     "edge_all_open_tabs",
     "# user's edge",
@@ -28,15 +30,22 @@ function stripEdgeTabsMetadata(text) {
     "the edge_all_open_tabs metadata",
     "edge_all_open_tabs =",
     "user's edge browser tabs metadata",
-    "# user's edge browser tabs metadata",
-    "user's edge browser tabs metadata"
+    "user's edge browser tabs metadata",
+    "the edge_all_open_tabs metadata."
   ];
-  const lower = text.toLowerCase();
+
   let cutIndex = -1;
   for (const m of markers) {
     const idx = lower.indexOf(m);
     if (idx !== -1 && (cutIndex === -1 || idx < cutIndex)) cutIndex = idx;
   }
+
+  // Also cut at any obvious header like "# User's Edge" or "The edge_all_open_tabs metadata"
+  if (cutIndex === -1) {
+    const headerMatch = lower.search(/#\s*user'?s\s*edge/);
+    if (headerMatch !== -1) cutIndex = headerMatch;
+  }
+
   if (cutIndex === -1) return text.trim();
   return text.slice(0, cutIndex).trim();
 }
@@ -62,7 +71,6 @@ function extractFirstJsonObject(text) {
 // Extract the first single word answer (useful for "correct"/"wrong").
 function extractFirstWord(text) {
   if (!text || typeof text !== "string") return "";
-  // remove common punctuation and braces, collapse whitespace
   const cleaned = text.replace(/[`"'“”«»
 
 \[\]
