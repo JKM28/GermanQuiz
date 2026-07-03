@@ -1,4 +1,3 @@
-// server.js
 import 'dotenv/config';
 import express from "express";
 import cors from "cors";
@@ -14,31 +13,50 @@ app.use((req, res, next) => {
   next();
 });
 
-// Safely extract the first top-level JSON object from a string
+/**
+ * Helpers
+ */
+
+// Remove any trailing edge_all_open_tabs metadata and anything after it.
+function stripEdgeTabsMetadata(text) {
+  if (!text || typeof text !== "string") return text;
+  const marker = "edge_all_open_tabs";
+  const idx = text.indexOf(marker);
+  if (idx === -1) return text;
+  return text.slice(0, idx).trim();
+}
+
+// Extract the first top-level JSON object from a string, or null.
 function extractFirstJsonObject(text) {
   if (!text || typeof text !== "string") return null;
   const start = text.indexOf('{');
   if (start === -1) return null;
-
   let depth = 0;
   for (let i = start; i < text.length; i++) {
     const ch = text[i];
     if (ch === '{') depth++;
     else if (ch === '}') depth--;
-
     if (depth === 0) {
       const candidate = text.slice(start, i + 1);
-      try {
-        return JSON.parse(candidate);
-      } catch (e) {
-        // continue searching in case of nested garbage
-      }
+      try { return JSON.parse(candidate); } catch (e) { /* continue */ }
     }
   }
   return null;
 }
 
-// Helper to create a GoogleGenerativeAI instance and check key presence
+// Extract the first single word answer (useful for "correct"/"wrong").
+function extractFirstWord(text) {
+  if (!text || typeof text !== "string") return "";
+  const cleaned = text.replace(/[`"'“”«»
+
+\[\]
+
+{}<>]/g, " ").replace(/\s+/g, " ").trim();
+  const first = cleaned.split(" ")[0] || "";
+  return first.toLowerCase();
+}
+
+// Create GoogleGenerativeAI instance if key present
 function createGenAI() {
   const key = process.env.GEMINI_API_KEY;
   if (!key) {
@@ -48,7 +66,7 @@ function createGenAI() {
   return new GoogleGenerativeAI(key);
 }
 
-// Helper to pick a model (tries preferred then fallback)
+// Pick model with fallback
 function getModel(genAI, preferred = "gemini-2.5-flash", fallback = "gemini-1.5-flash") {
   try {
     return genAI.getGenerativeModel({ model: preferred });
@@ -65,7 +83,7 @@ app.get("/health", (req, res) => {
 
 /**
  * Sentence equivalence check
- * Endpoint: POST /api/check-sentence
+ * POST /api/check-sentence
  * Body: { userSentence: string, expectedAnswer: string }
  */
 app.post("/api/check-sentence", async (req, res) => {
@@ -87,17 +105,17 @@ Expected: "${expectedAnswer}"
     if (!genAI) throw new Error("Missing GEMINI_API_KEY");
 
     const model = getModel(genAI);
-    const result = await model.generateContent(prompt);
-    const text = (result.response.text() || "").toLowerCase();
+    let raw = (result.response.text() || "").trim();
+raw = stripEdgeTabsMetadata(raw);
+raw = raw.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim();
 
-    console.log("Gemini reply (sentence):", text);
 
-    if (text.includes("correct")) {
+    const word = extractFirstWord(raw);
+    if (word.includes("correct")) {
       return res.json({ feedback: "✅ Correct!" });
-    } else if (text.includes("wrong")) {
+    } else if (word.includes("wrong")) {
       return res.json({ feedback: "❌ Wrong." });
     } else {
-      // Fallback deterministic check
       const normalized = (userSentence || "").trim().toLowerCase();
       const correct = (expectedAnswer || "").trim().toLowerCase();
       const isCorrect = normalized === correct;
@@ -105,7 +123,6 @@ Expected: "${expectedAnswer}"
     }
   } catch (err) {
     console.error("Gemini error (sentence):", err && (err.message || err));
-    // Deterministic fallback
     const normalized = (userSentence || "").trim().toLowerCase();
     const correct = (expectedAnswer || "").trim().toLowerCase();
     const isCorrect = normalized === correct;
@@ -118,7 +135,7 @@ Expected: "${expectedAnswer}"
 
 /**
  * Writing evaluation
- * Endpoint: POST /api/check-writing
+ * POST /api/check-writing
  * Body: { userText: string, prompt: string, rubric: string }
  */
 app.post("/api/check-writing", async (req, res) => {
@@ -131,7 +148,6 @@ app.post("/api/check-writing", async (req, res) => {
     });
   }
 
-  // Strong instruction to return only JSON and nothing else
   const gradingPrompt = `
 You must respond with valid JSON only. Do not add any text, commentary, metadata, or markdown fences.
 
@@ -158,12 +174,11 @@ Respond with ONLY valid JSON in exactly this shape (use true/false for booleans)
     const result = await model.generateContent(gradingPrompt);
     let raw = (result.response.text() || "").trim();
 
-    // strip accidental markdown fences just in case
+    raw = stripEdgeTabsMetadata(raw);
     raw = raw.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim();
 
     console.log("AI raw output (writing):", raw);
 
-    // Try to extract the first JSON object from the raw output
     const parsed = extractFirstJsonObject(raw);
     if (!parsed) {
       console.error("Failed to extract JSON from AI response. Raw:", raw);
@@ -189,7 +204,7 @@ Respond with ONLY valid JSON in exactly this shape (use true/false for booleans)
   }
 });
 
-// Ensure we bind to the port Render provides and to 0.0.0.0 so the port scan detects the service
+// Bind to Render-provided port and 0.0.0.0
 const PORT = process.env.PORT || 10000;
 const HOST = "0.0.0.0";
 
