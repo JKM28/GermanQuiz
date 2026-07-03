@@ -7,51 +7,100 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// Simple request logger
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  next();
+});
 
-app.post("/check-sentence", async (req, res) => {
-  const { userSentence, expectedAnswer } = req.body;
+// Helper to create a GoogleGenerativeAI instance and check key presence
+function createGenAI() {
+  const key = process.env.GEMINI_API_KEY;
+  if (!key) {
+    console.warn("GEMINI_API_KEY is not set.");
+    return null;
+  }
+  return new GoogleGenerativeAI(key);
+}
 
+// Helper to pick a model (tries preferred then fallback)
+function getModel(genAI, preferred = "gemini-2.5-flash", fallback = "gemini-1.5-flash") {
+  try {
+    return genAI.getGenerativeModel({ model: preferred });
+  } catch (e) {
+    console.warn(`Preferred model ${preferred} unavailable, falling back to ${fallback}`);
+    return genAI.getGenerativeModel({ model: fallback });
+  }
+}
+
+// Health check
+app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
+});
+
+/**
+ * Sentence equivalence check
+ * Endpoint: POST /api/check-sentence
+ * Body: { userSentence: string, expectedAnswer: string }
+ */
+app.post("/api/check-sentence", async (req, res) => {
+  const { userSentence, expectedAnswer } = req.body || {};
+  if (typeof userSentence !== "string" || typeof expectedAnswer !== "string") {
+    return res.status(400).json({ error: "Request must include userSentence and expectedAnswer strings." });
+  }
+
+  const genAI = createGenAI();
   const prompt = `
-  Is the student's sentence equivalent to the expected answer?
-  Reply only with "correct" or "wrong".
+Is the student's sentence equivalent to the expected answer?
+Reply only with "correct" or "wrong".
 
-  Student: "${userSentence}"
-  Expected: "${expectedAnswer}"
+Student: "${userSentence}"
+Expected: "${expectedAnswer}"
   `;
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-    const result = await model.generateContent(prompt);
-    const text = result.response.text().toLowerCase();
+    if (!genAI) throw new Error("Missing GEMINI_API_KEY");
 
-    console.log("Gemini reply:", text);
+    const model = getModel(genAI);
+    const result = await model.generateContent(prompt);
+    const text = (result.response.text() || "").toLowerCase();
+
+    console.log("Gemini reply (sentence):", text);
 
     if (text.includes("correct")) {
-      res.json({ feedback: "✅ Correct!" });
+      return res.json({ feedback: "✅ Correct!" });
     } else if (text.includes("wrong")) {
-      res.json({ feedback: "❌ Wrong." });
+      return res.json({ feedback: "❌ Wrong." });
     } else {
+      // Fallback deterministic check
       const normalized = (userSentence || "").trim().toLowerCase();
       const correct = (expectedAnswer || "").trim().toLowerCase();
       const isCorrect = normalized === correct;
-      res.json({ feedback: isCorrect ? "✅ Correct!" : "❌ Wrong." });
+      return res.json({ feedback: isCorrect ? "✅ Correct!" : "❌ Wrong." });
     }
   } catch (err) {
-    console.error("Gemini error:", err);
+    console.error("Gemini error (sentence):", err && (err.message || err));
+    // Deterministic fallback
     const normalized = (userSentence || "").trim().toLowerCase();
     const correct = (expectedAnswer || "").trim().toLowerCase();
     const isCorrect = normalized === correct;
-    res.json({ feedback: isCorrect ? "✅ Correct!" : "❌ Wrong (AI unavailable)." });
+
+    const response = { feedback: isCorrect ? "✅ Correct!" : "❌ Wrong (AI unavailable)." };
+    if (process.env.DEBUG_SHOW_ERROR === "true") response.error = err && (err.message || String(err));
+    return res.status(200).json(response);
   }
 });
 
-// NEW: open-ended writing evaluation against a rubric
-app.post("/check-writing", async (req, res) => {
-  const { userText, prompt: questionPrompt, rubric } = req.body;
+/**
+ * Writing evaluation
+ * Endpoint: POST /api/check-writing
+ * Body: { userText: string, prompt: string, rubric: string }
+ */
+app.post("/api/check-writing", async (req, res) => {
+  const { userText, prompt: questionPrompt, rubric } = req.body || {};
 
   if (!userText || !userText.trim()) {
-    return res.json({
+    return res.status(200).json({
       passed: false,
       feedback: "No response was written."
     });
@@ -60,8 +109,8 @@ app.post("/check-writing", async (req, res) => {
   const gradingPrompt = `
 You are a supportive German language teacher grading a student's short written response.
 
-Question given to the student: "${questionPrompt}"
-Grading criteria: ${rubric}
+Question given to the student: "${questionPrompt || ""}"
+Grading criteria: ${rubric || "Use general criteria: length, relevance, grammar"}
 
 Student's response:
 """
@@ -74,30 +123,48 @@ Respond with ONLY valid JSON, no markdown code fences, no extra text, in exactly
 `;
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const genAI = createGenAI();
+    if (!genAI) throw new Error("Missing GEMINI_API_KEY");
+
+    const model = getModel(genAI);
     const result = await model.generateContent(gradingPrompt);
-    let raw = result.response.text().trim();
+    let raw = (result.response.text() || "").trim();
 
     // strip accidental markdown fences just in case
     raw = raw.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim();
 
-    console.log("Gemini writing reply:", raw);
+    console.log("Gemini writing reply (raw):", raw);
 
-    const parsed = JSON.parse(raw);
+    // Parse JSON safely
+    let parsed;
+    try {
+      parsed = JSON.parse(raw);
+    } catch (parseErr) {
+      console.error("Failed to parse Gemini JSON response:", parseErr);
+      throw new Error("Invalid JSON from AI");
+    }
+
     const passed = Boolean(parsed.meets_length && parsed.addresses_prompt && parsed.grammar_ok);
 
-    res.json({
+    return res.status(200).json({
       passed,
       feedback: parsed.feedback || "Response evaluated."
     });
   } catch (err) {
-    console.error("Gemini writing-check error:", err);
-    res.json({
+    console.error("Gemini writing-check error:", err && (err.message || err));
+    const response = {
       passed: null,
       feedback: "Response saved. AI feedback is currently unavailable."
-    });
+    };
+    if (process.env.DEBUG_SHOW_ERROR === "true") response.error = err && (err.message || String(err));
+    return res.status(200).json(response);
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Ensure we bind to the port Render provides and to 0.0.0.0 so the port scan detects the service
+const PORT = process.env.PORT || 10000;
+const HOST = "0.0.0.0";
+
+app.listen(PORT, HOST, () => {
+  console.log(`Server running on port ${PORT}`);
+});
