@@ -17,13 +17,28 @@ app.use((req, res, next) => {
  * Helpers
  */
 
-// Remove any trailing edge_all_open_tabs metadata and anything after it.
+// Remove any trailing edge_all_open_tabs or "# User's Edge" metadata and anything after it.
 function stripEdgeTabsMetadata(text) {
   if (!text || typeof text !== "string") return text;
-  const marker = "edge_all_open_tabs";
-  const idx = text.indexOf(marker);
-  if (idx === -1) return text;
-  return text.slice(0, idx).trim();
+  // markers to cut at (case-insensitive)
+  const markers = [
+    "edge_all_open_tabs",
+    "# user's edge",
+    "# user\\'s edge",
+    "the edge_all_open_tabs metadata",
+    "edge_all_open_tabs =",
+    "user's edge browser tabs metadata",
+    "# user's edge browser tabs metadata",
+    "user's edge browser tabs metadata"
+  ];
+  const lower = text.toLowerCase();
+  let cutIndex = -1;
+  for (const m of markers) {
+    const idx = lower.indexOf(m);
+    if (idx !== -1 && (cutIndex === -1 || idx < cutIndex)) cutIndex = idx;
+  }
+  if (cutIndex === -1) return text.trim();
+  return text.slice(0, cutIndex).trim();
 }
 
 // Extract the first top-level JSON object from a string, or null.
