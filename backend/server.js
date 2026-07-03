@@ -38,7 +38,7 @@ function extractFirstJsonObject(text) {
     else if (ch === '}') depth--;
     if (depth === 0) {
       const candidate = text.slice(start, i + 1);
-      try { return JSON.parse(candidate); } catch (e) { /* continue */ }
+      try { return JSON.parse(candidate); } catch (e) { /* continue searching */ }
     }
   }
   return null;
@@ -47,11 +47,12 @@ function extractFirstJsonObject(text) {
 // Extract the first single word answer (useful for "correct"/"wrong").
 function extractFirstWord(text) {
   if (!text || typeof text !== "string") return "";
+  // remove common punctuation and braces, collapse whitespace
   const cleaned = text.replace(/[`"'“”«»
 
 \[\]
 
-{}<>]/g, " ").replace(/\s+/g, " ").trim();
+\{\}<>]/g, " ").replace(/\s+/g, " ").trim();
   const first = cleaned.split(" ")[0] || "";
   return first.toLowerCase();
 }
@@ -105,10 +106,14 @@ Expected: "${expectedAnswer}"
     if (!genAI) throw new Error("Missing GEMINI_API_KEY");
 
     const model = getModel(genAI);
+    const result = await model.generateContent(prompt);
     let raw = (result.response.text() || "").trim();
-raw = stripEdgeTabsMetadata(raw);
-raw = raw.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim();
 
+    // sanitize model output
+    raw = stripEdgeTabsMetadata(raw);
+    raw = raw.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim();
+
+    console.log("Gemini reply (sentence) raw:", raw);
 
     const word = extractFirstWord(raw);
     if (word.includes("correct")) {
@@ -116,6 +121,7 @@ raw = raw.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "
     } else if (word.includes("wrong")) {
       return res.json({ feedback: "❌ Wrong." });
     } else {
+      // deterministic fallback
       const normalized = (userSentence || "").trim().toLowerCase();
       const correct = (expectedAnswer || "").trim().toLowerCase();
       const isCorrect = normalized === correct;
@@ -150,6 +156,7 @@ app.post("/api/check-writing", async (req, res) => {
 
   const gradingPrompt = `
 You must respond with valid JSON only. Do not add any text, commentary, metadata, or markdown fences.
+You must respond with exactly one JSON object and nothing else. Do not include any system, browser, or tab metadata.
 
 You are a supportive German language teacher grading a student's short written response.
 
@@ -174,6 +181,7 @@ Respond with ONLY valid JSON in exactly this shape (use true/false for booleans)
     const result = await model.generateContent(gradingPrompt);
     let raw = (result.response.text() || "").trim();
 
+    // sanitize model output
     raw = stripEdgeTabsMetadata(raw);
     raw = raw.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim();
 
@@ -185,11 +193,17 @@ Respond with ONLY valid JSON in exactly this shape (use true/false for booleans)
       throw new Error("Invalid JSON from AI");
     }
 
-    const passed = Boolean(parsed.meets_length && parsed.addresses_prompt && parsed.grammar_ok);
+    // Clean the feedback field in case the model put metadata inside the string
+    let cleanedFeedback = (parsed.feedback || "").toString().trim();
+    cleanedFeedback = stripEdgeTabsMetadata(cleanedFeedback);
+    cleanedFeedback = cleanedFeedback.replace(/\s+$/g, "").trim();
+
+    // Compute passed strictly (ensure booleans are true)
+    const passed = Boolean(parsed.meets_length === true && parsed.addresses_prompt === true && parsed.grammar_ok === true);
 
     return res.status(200).json({
       passed,
-      feedback: parsed.feedback || "Response evaluated."
+      feedback: cleanedFeedback || "Response evaluated."
     });
   } catch (err) {
     console.error("Gemini writing-check error:", err && (err.message || err));
