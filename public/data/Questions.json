@@ -151,7 +151,7 @@
     "level": "A1",
     "skill": "writing",
     "type": "short_answer",
-    "prompt": "Schreibe 4-5 Satze uber deinen Tagesablauf.",
+    "prompt": "Schreibe 2-3 Satze uber deinen Tagesablauf.",
     "options": [],
     "answer": "",
     "time_limit_seconds": 120,
@@ -160,7 +160,7 @@
       "writing",
       "daily-routine"
     ],
-    "rubric": "A1 level. The student should write 4-5 simple present-tense sentences describing a daily routine (e.g. waking up, eating, going to school/work). Basic vocabulary is expected; minor article or word-order errors are acceptable and should not fail the response."
+    "rubric": "A1 level. The student should write 2-3 simple present-tense sentences describing a daily routine (e.g. waking up, eating, going to school/work). Basic vocabulary is expected; minor article or word-order errors are acceptable and should not fail the response."
   },
   {
     "id": "a2-001",
@@ -641,7 +641,7 @@
     "level": "A1",
     "skill": "writing",
     "type": "short_answer",
-    "prompt": "Schreibe 4-5 Satze uber deine Familie.",
+    "prompt": "Schreibe 2-3 Satze uber deine Familie.",
     "options": [],
     "answer": "",
     "time_limit_seconds": 140,
@@ -650,7 +650,7 @@
       "writing",
       "family"
     ],
-    "rubric": "A1 level. The student should write  simple sentences describing family members (e.g. names, relationships, where they live). Basic present-tense verbs and simple vocabulary expected."
+    "rubric": "A1 level. The student should write 2-3 simple sentences describing family members (e.g. names, relationships, where they live). Basic present-tense verbs and simple vocabulary expected."
   },
   {
     "id": "a2-011",
@@ -1127,7 +1127,7 @@
     "level": "A1",
     "skill": "writing",
     "type": "short_answer",
-    "prompt": "Schreibe 4-5 Satze uber deine Lieblingsstadt.",
+    "prompt": "Schreibe 2-3 Satze uber deine Lieblingsstadt.",
     "options": [],
     "answer": "",
     "time_limit_seconds": 150,
@@ -1135,7 +1135,7 @@
     "tags": [
       "writing"
     ],
-    "rubric": "A1 level. The student should write 4-5 simple sentences about a favorite city, mentioning at least one reason why they like it. Basic vocabulary and present tense expected."
+    "rubric": "A1 level. The student should write 2-3 simple sentences about a favorite city, mentioning at least one reason why they like it. Basic vocabulary and present tense expected."
   },
   {
     "id": "a2-021",
@@ -2535,7 +2535,7 @@
     "level": "A1",
     "skill": "writing",
     "type": "short_answer",
-    "prompt": "Schreibe 4-5 Sätze über dein Lieblingsessen.",
+    "prompt": "Schreibe 2-3 Sätze über dein Lieblingsessen.",
     "options": [],
     "answer": "",
     "time_limit_seconds": 140,
@@ -2544,7 +2544,7 @@
       "writing",
       "food"
     ],
-    "rubric": "A1 level. The student should write 4-5 simple sentences about a favorite food, mentioning what it is and optionally why they like it. Basic present-tense verbs and vocabulary expected."
+    "rubric": "A1 level. The student should write 2-3 simple sentences about a favorite food, mentioning what it is and optionally why they like it. Basic present-tense verbs and vocabulary expected."
   },
   {
     "id": "a2-041",
@@ -3047,5 +3047,856 @@
       "argumentation"
     ],
     "rubric": "B1 level. The student should write 4-5 sentences comparing city life and countryside life, giving a justified opinion. Should use opinion phrases (meiner Meinung nach) and at least one connector (weil, deshalb, obwohl, aber)."
+  },
+  {
+    "id": "a1-063",
+    "level": "A1",
+    "skill": "farewells",
+    "type": "mcq",
+    "prompt": "Was sagt man, wenn man sich verabschiedet?",
+    "options": [
+      "Tschüss",
+      "Bitte",
+      "Danke"
+    ],
+    "answer": "Tschüss",
+    "time_limit_seconds": 30,
+    "points": 1,
+    "tags": [
+      "greetings"
+    ]
+  },
+  {
+    "id": "a1-064",
+    "level": "A1",
+    "skill": "articles",
+    "type": "gapfill",
+    "prompt": "Ich habe ___ Bruder und eine Schwester. (ein)",
+    "options": [],
+    "answer": "einen",
+    "time_limit_seconds": 35,
+    "points": 1,
+    "tags": [
+      "grammar",
+      "family"
+    ]
+  },
+  {
+    "id": "a1-065",
+    "level": "A1",
+    "skill": "numbers",
+    "type": "mcq",
+    "prompt": "Wie viel ist zehn minus drei?",
+    "options": [
+      "sieben",
+      "acht",
+      "sechs"
+    ],
+    "answer": "sieben",
+    "time_limit_seconds": 30,
+    "points": 1,
+    "tags": [
+      "numbers"
+    ]
+  },
+  {
+    "id": "a1-066",
+    "level": "A1",
+    "skill": "clothing",
+    "type": "gapfill",
+    "prompt": "Das Wetter ist kalt, ich brauche ___ Jacke.",
+    "options": [],
+    "answer": "eine",
+    "time_limit_seconds": 30,
+    "points": 1,
+    "tags": [
+      "grammar",
+      "weather"
+    ]
+  },
+  {
+    "id": "a1-067",
+    "level": "A1",
+    "skill": "time",
+    "type": "mcq",
+    "prompt": "Wann isst du Mittag?",
+    "options": [
+      "Um zwölf Uhr.",
+      "Im Bett.",
+      "Seit Schule."
+    ],
+    "answer": "Um zwölf Uhr.",
+    "time_limit_seconds": 30,
+    "points": 1,
+    "tags": [
+      "time"
+    ]
+  },
+  {
+    "id": "a1-068",
+    "level": "A1",
+    "skill": "verbs",
+    "type": "gapfill",
+    "prompt": "Sie ___ jeden Tag Kaffee.",
+    "options": [],
+    "answer": "trinkt",
+    "time_limit_seconds": 30,
+    "points": 1,
+    "tags": [
+      "present-tense"
+    ]
+  },
+  {
+    "id": "a1-069",
+    "level": "A1",
+    "skill": "places",
+    "type": "mcq",
+    "prompt": "Wo kaufst du Brot?",
+    "options": [
+      "In der Bäckerei.",
+      "Im Fluss.",
+      "Auf dem Stuhl."
+    ],
+    "answer": "In der Bäckerei.",
+    "time_limit_seconds": 30,
+    "points": 1,
+    "tags": [
+      "places",
+      "shopping"
+    ]
+  },
+  {
+    "id": "a1-070",
+    "level": "A1",
+    "skill": "question-words",
+    "type": "gapfill",
+    "prompt": "___ ist mein Vater? - Er ist im Büro.",
+    "options": [],
+    "answer": "Wo",
+    "time_limit_seconds": 30,
+    "points": 1,
+    "tags": [
+      "question-words"
+    ]
+  },
+  {
+    "id": "a1-071",
+    "level": "A1",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "aufpassen auf",
+    "preposition": "auf",
+    "case": "Akkusativ",
+    "example": "Ich passe auf meine kleine Schwester auf.",
+    "prompt": "What is the English translation of 'aufpassen auf'?",
+    "options": [
+      "to look after",
+      "to laugh about",
+      "to thank for"
+    ],
+    "answer": "to look after",
+    "time_limit_seconds": 35,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "care"
+    ]
+  },
+  {
+    "id": "a1-072",
+    "level": "A1",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "riechen nach",
+    "preposition": "nach",
+    "case": "Dativ",
+    "example": "Der Kuchen riecht nach Vanille.",
+    "prompt": "What is the English translation of 'riechen nach'?",
+    "options": [
+      "to smell of",
+      "to taste of",
+      "to look after"
+    ],
+    "answer": "to smell of",
+    "time_limit_seconds": 35,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "senses"
+    ]
+  },
+  {
+    "id": "a1-073",
+    "level": "A1",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "schmecken nach",
+    "preposition": "nach",
+    "case": "Dativ",
+    "example": "Der Tee schmeckt nach Zitrone.",
+    "prompt": "What is the English translation of 'schmecken nach'?",
+    "options": [
+      "to taste of",
+      "to smell of",
+      "to say goodbye to"
+    ],
+    "answer": "to taste of",
+    "time_limit_seconds": 35,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "senses"
+    ]
+  },
+  {
+    "id": "a1-074",
+    "level": "A1",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "sich verabschieden von",
+    "preposition": "von",
+    "case": "Dativ",
+    "example": "Ich verabschiede mich von meinen Freunden.",
+    "prompt": "What is the English translation of 'sich verabschieden von'?",
+    "options": [
+      "to say goodbye to",
+      "to look after",
+      "to laugh about"
+    ],
+    "answer": "to say goodbye to",
+    "time_limit_seconds": 35,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "farewells"
+    ]
+  },
+  {
+    "id": "a1-075",
+    "level": "A1",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "lachen über",
+    "preposition": "über",
+    "case": "Akkusativ",
+    "example": "Wir lachen über den Witz.",
+    "prompt": "What is the English translation of 'lachen über'?",
+    "options": [
+      "to laugh about",
+      "to smell of",
+      "to thank for"
+    ],
+    "answer": "to laugh about",
+    "time_limit_seconds": 35,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "emotion"
+    ]
+  },
+  {
+    "id": "a1-076",
+    "level": "A1",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "sich bedanken für",
+    "preposition": "für",
+    "case": "Akkusativ",
+    "example": "Ich bedanke mich für das Geschenk.",
+    "prompt": "What is the English translation of 'sich bedanken für'?",
+    "options": [
+      "to thank someone for",
+      "to say goodbye to",
+      "to taste of"
+    ],
+    "answer": "to thank someone for",
+    "time_limit_seconds": 35,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "politeness"
+    ]
+  },
+  {
+    "id": "a1-077",
+    "level": "A1",
+    "skill": "writing",
+    "type": "short_answer",
+    "prompt": "Schreibe 2-3 Sätze über dein Wochenende.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 140,
+    "points": 2,
+    "tags": [
+      "writing",
+      "free-time"
+    ],
+    "rubric": "A1 level. The student should write 2-3 simple sentences describing what they did or do on the weekend, using present or simple past tense. Basic vocabulary and minor grammar errors are acceptable."
+  },
+  {
+    "id": "a2-054",
+    "level": "A2",
+    "skill": "past-tense",
+    "type": "mcq",
+    "prompt": "Letzten Monat ___ ich ein neues Handy gekauft.",
+    "options": [
+      "habe",
+      "bin",
+      "hat"
+    ],
+    "answer": "habe",
+    "time_limit_seconds": 40,
+    "points": 1,
+    "tags": [
+      "perfekt"
+    ]
+  },
+  {
+    "id": "a2-055",
+    "level": "A2",
+    "skill": "transport",
+    "type": "gapfill",
+    "prompt": "Er fährt jeden Tag ___ Fahrrad zur Arbeit.",
+    "options": [],
+    "answer": "mit dem",
+    "time_limit_seconds": 40,
+    "points": 1,
+    "tags": [
+      "transport"
+    ]
+  },
+  {
+    "id": "a2-056",
+    "level": "A2",
+    "skill": "modals",
+    "type": "mcq",
+    "prompt": "Du ___ nicht so laut sprechen, das Baby schläft.",
+    "options": [
+      "sollst",
+      "darfst",
+      "willst"
+    ],
+    "answer": "sollst",
+    "time_limit_seconds": 40,
+    "points": 1,
+    "tags": [
+      "modals"
+    ]
+  },
+  {
+    "id": "a2-057",
+    "level": "A2",
+    "skill": "connectors",
+    "type": "gapfill",
+    "prompt": "Ich gehe nicht raus, ___ es kalt ist.",
+    "options": [],
+    "answer": "weil",
+    "time_limit_seconds": 35,
+    "points": 1,
+    "tags": [
+      "subordinate-clauses"
+    ]
+  },
+  {
+    "id": "a2-058",
+    "level": "A2",
+    "skill": "comparisons",
+    "type": "mcq",
+    "prompt": "Mein Auto ist ___ als deins.",
+    "options": [
+      "schneller",
+      "schnell",
+      "am schnellsten"
+    ],
+    "answer": "schneller",
+    "time_limit_seconds": 40,
+    "points": 1,
+    "tags": [
+      "adjectives"
+    ]
+  },
+  {
+    "id": "a2-059",
+    "level": "A2",
+    "skill": "future",
+    "type": "gapfill",
+    "prompt": "Nächste Woche ___ wir nach Spanien fliegen.",
+    "options": [],
+    "answer": "werden",
+    "time_limit_seconds": 40,
+    "points": 1,
+    "tags": [
+      "future"
+    ]
+  },
+  {
+    "id": "a2-060",
+    "level": "A2",
+    "skill": "shopping",
+    "type": "mcq",
+    "prompt": "Ich möchte das zurückgeben, haben Sie eine ___?",
+    "options": [
+      "Quittung",
+      "Tasche",
+      "Kasse"
+    ],
+    "answer": "Quittung",
+    "time_limit_seconds": 40,
+    "points": 1,
+    "tags": [
+      "shopping"
+    ]
+  },
+  {
+    "id": "a2-061",
+    "level": "A2",
+    "skill": "work",
+    "type": "gapfill",
+    "prompt": "Meine Schwester ___ als Krankenschwester.",
+    "options": [],
+    "answer": "arbeitet",
+    "time_limit_seconds": 40,
+    "points": 1,
+    "tags": [
+      "jobs"
+    ]
+  },
+  {
+    "id": "a2-062",
+    "level": "A2",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "sich verlassen auf",
+    "preposition": "auf",
+    "case": "Akkusativ",
+    "example": "Ich verlasse mich auf dich.",
+    "prompt": "What is the English translation of 'sich verlassen auf'?",
+    "options": [
+      "to rely on",
+      "to fall in love with",
+      "to react to"
+    ],
+    "answer": "to rely on",
+    "time_limit_seconds": 40,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "trust"
+    ]
+  },
+  {
+    "id": "a2-063",
+    "level": "A2",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "sich verlieben in",
+    "preposition": "in",
+    "case": "Akkusativ",
+    "example": "Er hat sich in seine Kollegin verliebt.",
+    "prompt": "What is the English translation of 'sich verlieben in'?",
+    "options": [
+      "to fall in love with",
+      "to rely on",
+      "to agree on"
+    ],
+    "answer": "to fall in love with",
+    "time_limit_seconds": 40,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "emotion"
+    ]
+  },
+  {
+    "id": "a2-064",
+    "level": "A2",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "sich wundern über",
+    "preposition": "über",
+    "case": "Akkusativ",
+    "example": "Ich wundere mich über die Nachricht.",
+    "prompt": "What is the English translation of 'sich wundern über'?",
+    "options": [
+      "to be surprised about",
+      "to congratulate on",
+      "to react to"
+    ],
+    "answer": "to be surprised about",
+    "time_limit_seconds": 40,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "emotion"
+    ]
+  },
+  {
+    "id": "a2-065",
+    "level": "A2",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "reagieren auf",
+    "preposition": "auf",
+    "case": "Akkusativ",
+    "example": "Er reagiert nicht auf meine E-Mails.",
+    "prompt": "What is the English translation of 'reagieren auf'?",
+    "options": [
+      "to react to",
+      "to rely on",
+      "to be surprised about"
+    ],
+    "answer": "to react to",
+    "time_limit_seconds": 40,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "communication"
+    ]
+  },
+  {
+    "id": "a2-066",
+    "level": "A2",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "sich einigen auf",
+    "preposition": "auf",
+    "case": "Akkusativ",
+    "example": "Wir haben uns auf einen Preis geeinigt.",
+    "prompt": "What is the English translation of 'sich einigen auf'?",
+    "options": [
+      "to agree on",
+      "to fall in love with",
+      "to congratulate on"
+    ],
+    "answer": "to agree on",
+    "time_limit_seconds": 40,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "agreement"
+    ]
+  },
+  {
+    "id": "a2-067",
+    "level": "A2",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "gratulieren zu",
+    "preposition": "zu",
+    "case": "Dativ",
+    "example": "Ich gratuliere dir zum Geburtstag.",
+    "prompt": "What is the English translation of 'gratulieren zu'?",
+    "options": [
+      "to congratulate on",
+      "to agree on",
+      "to react to"
+    ],
+    "answer": "to congratulate on",
+    "time_limit_seconds": 40,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "social"
+    ]
+  },
+  {
+    "id": "a2-068",
+    "level": "A2",
+    "skill": "writing",
+    "type": "short_answer",
+    "prompt": "Schreibe 3-4 Sätze über eine Person, die du bewunderst, und warum.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 200,
+    "points": 3,
+    "tags": [
+      "writing",
+      "people"
+    ],
+    "rubric": "A2 level. The student should write 3-4 sentences describing an admired person and giving at least one reason why, using present tense. Simple connectors (weil, und, aber) are a plus but not required."
+  },
+  {
+    "id": "b1-052",
+    "level": "B1",
+    "skill": "debate",
+    "type": "mcq",
+    "prompt": "Welche Formulierung zeigt Widerspruch?",
+    "options": [
+      "Ich sehe das anders.",
+      "Guten Tag.",
+      "Vielen Dank."
+    ],
+    "answer": "Ich sehe das anders.",
+    "time_limit_seconds": 50,
+    "points": 1,
+    "tags": [
+      "opinion"
+    ]
+  },
+  {
+    "id": "b1-053",
+    "level": "B1",
+    "skill": "contrast",
+    "type": "gapfill",
+    "prompt": "Er hat viel gearbeitet, ___ hat er die Prüfung nicht bestanden.",
+    "options": [],
+    "answer": "trotzdem",
+    "time_limit_seconds": 50,
+    "points": 1,
+    "tags": [
+      "connectors"
+    ]
+  },
+  {
+    "id": "b1-054",
+    "level": "B1",
+    "skill": "reading",
+    "type": "mcq",
+    "prompt": "Im Vertrag steht: 'Kündigung mit einer Frist von einem Monat.' Was bedeutet das?",
+    "options": [
+      "Man muss einen Monat vorher kündigen.",
+      "Der Vertrag dauert einen Monat.",
+      "Man zahlt einen Monat extra."
+    ],
+    "answer": "Man muss einen Monat vorher kündigen.",
+    "time_limit_seconds": 55,
+    "points": 1,
+    "tags": [
+      "comprehension"
+    ]
+  },
+  {
+    "id": "b1-055",
+    "level": "B1",
+    "skill": "formal-writing",
+    "type": "gapfill",
+    "prompt": "Mit freundlichen ___,",
+    "options": [],
+    "answer": "Grüßen",
+    "time_limit_seconds": 50,
+    "points": 1,
+    "tags": [
+      "email"
+    ]
+  },
+  {
+    "id": "b1-056",
+    "level": "B1",
+    "skill": "konjunktiv",
+    "type": "mcq",
+    "prompt": "Welche Form ist korrekt? Wenn ich reich ___, würde ich reisen.",
+    "options": [
+      "wäre",
+      "bin",
+      "war"
+    ],
+    "answer": "wäre",
+    "time_limit_seconds": 55,
+    "points": 1,
+    "tags": [
+      "grammar"
+    ]
+  },
+  {
+    "id": "b1-057",
+    "level": "B1",
+    "skill": "cause",
+    "type": "gapfill",
+    "prompt": "Die Preise steigen, ___ die Nachfrage hoch ist.",
+    "options": [],
+    "answer": "weil",
+    "time_limit_seconds": 50,
+    "points": 1,
+    "tags": [
+      "arguments"
+    ]
+  },
+  {
+    "id": "b1-058",
+    "level": "B1",
+    "skill": "work",
+    "type": "mcq",
+    "prompt": "Welche Aussage passt in eine Kündigung?",
+    "options": [
+      "Ich kündige meinen Vertrag zum 31. Dezember.",
+      "Ich kündige das Wetter.",
+      "Mein Vertrag ist blau."
+    ],
+    "answer": "Ich kündige meinen Vertrag zum 31. Dezember.",
+    "time_limit_seconds": 55,
+    "points": 1,
+    "tags": [
+      "formal-writing",
+      "work"
+    ]
+  },
+  {
+    "id": "b1-059",
+    "level": "B1",
+    "skill": "relative-clauses",
+    "type": "gapfill",
+    "prompt": "Das ist die Frau, ___ Auto kaputt ist.",
+    "options": [],
+    "answer": "deren",
+    "time_limit_seconds": 55,
+    "points": 1,
+    "tags": [
+      "grammar",
+      "relative-clauses"
+    ]
+  },
+  {
+    "id": "b1-060",
+    "level": "B1",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "profitieren von",
+    "preposition": "von",
+    "case": "Dativ",
+    "example": "Viele Firmen profitieren von der neuen Technologie.",
+    "prompt": "What is the English translation of 'profitieren von'?",
+    "options": [
+      "to benefit from",
+      "to result from",
+      "to consist of"
+    ],
+    "answer": "to benefit from",
+    "time_limit_seconds": 50,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "business"
+    ]
+  },
+  {
+    "id": "b1-061",
+    "level": "B1",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "resultieren aus",
+    "preposition": "aus",
+    "case": "Dativ",
+    "example": "Der Erfolg resultiert aus harter Arbeit.",
+    "prompt": "What is the English translation of 'resultieren aus'?",
+    "options": [
+      "to result from",
+      "to benefit from",
+      "to insist on"
+    ],
+    "answer": "to result from",
+    "time_limit_seconds": 50,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "logic"
+    ]
+  },
+  {
+    "id": "b1-062",
+    "level": "B1",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "bestehen aus",
+    "preposition": "aus",
+    "case": "Dativ",
+    "example": "Das Team besteht aus zehn Personen.",
+    "prompt": "What is the English translation of 'bestehen aus'?",
+    "options": [
+      "to consist of",
+      "to insist on",
+      "to refer to"
+    ],
+    "answer": "to consist of",
+    "time_limit_seconds": 50,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "structure"
+    ]
+  },
+  {
+    "id": "b1-063",
+    "level": "B1",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "bestehen auf",
+    "preposition": "auf",
+    "case": "Dativ",
+    "example": "Sie besteht auf einer schriftlichen Antwort.",
+    "prompt": "What is the English translation of 'bestehen auf'?",
+    "options": [
+      "to insist on",
+      "to consist of",
+      "to be based on"
+    ],
+    "answer": "to insist on",
+    "time_limit_seconds": 50,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "insistence"
+    ]
+  },
+  {
+    "id": "b1-064",
+    "level": "B1",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "sich beziehen auf",
+    "preposition": "auf",
+    "case": "Akkusativ",
+    "example": "Der Bericht bezieht sich auf die letzten Daten.",
+    "prompt": "What is the English translation of 'sich beziehen auf'?",
+    "options": [
+      "to refer to",
+      "to result from",
+      "to be based on"
+    ],
+    "answer": "to refer to",
+    "time_limit_seconds": 50,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "reference"
+    ]
+  },
+  {
+    "id": "b1-065",
+    "level": "B1",
+    "skill": "verb-prepositions",
+    "type": "mcq",
+    "verb": "sich orientieren an",
+    "preposition": "an",
+    "case": "Dativ",
+    "example": "Die Firma orientiert sich an internationalen Standards.",
+    "prompt": "What is the English translation of 'sich orientieren an'?",
+    "options": [
+      "to be based on",
+      "to consist of",
+      "to refer to"
+    ],
+    "answer": "to be based on",
+    "time_limit_seconds": 50,
+    "points": 1,
+    "tags": [
+      "verbs",
+      "standards"
+    ]
+  },
+  {
+    "id": "b1-066",
+    "level": "B1",
+    "skill": "writing",
+    "type": "short_answer",
+    "prompt": "Schreibe 4-5 Sätze: Was war die beste Entscheidung, die du je getroffen hast? Begründe deine Antwort.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 240,
+    "points": 3,
+    "tags": [
+      "writing",
+      "storytelling"
+    ],
+    "rubric": "B1 level. The student should write 4-5 sentences describing a good decision they made and justifying why, using past tense (perfect or preterite) and at least one connector (weil, deshalb, obwohl)."
   }
 ]
