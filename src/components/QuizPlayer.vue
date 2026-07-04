@@ -1,75 +1,107 @@
 <template>
   <div class="quiz-player">
-    <section class="status-card">
-      <div class="status-top">
-        <div>
-          <p class="status-kicker">Now practicing</p>
-          <h3>Level {{ level }} Quiz</h3>
-        </div>
-        <div class="status-stats">
-          <span>{{ answeredCount }} answered</span>
-          <span>{{ questions.length }} total</span>
-        </div>
-      </div>
-      <div class="progress-track" role="progressbar" :aria-valuemin="0" :aria-valuemax="100" :aria-valuenow="progressPercent">
-        <div class="progress-fill" :style="{ width: `${progressPercent}%` }"></div>
-      </div>
-      <p class="progress-text">Question {{ displayQuestionNumber }} of {{ questions.length }}</p>
-    </section>
-    <section v-if="current" class="question-shell">
-      <QuestionRenderer :question="current" @answered="onAnswered" />
-    </section>
-    <section v-if="feedback" class="feedback-card" :class="feedback.kind">
-      {{ feedback.message }}
-    </section>
-    <section class="nav-row" v-if="!finished">
-      <button @click="prev" class="nav-btn" :disabled="index === 0">Previous</button>
-      <button @click="next" class="nav-btn nav-btn-primary" :disabled="index >= questions.length - 1">Next</button>
-    </section>
-    <section v-if="finished" class="result-card">
-      <div class="result-title">Quiz Summary</div>
-      <div class="result-line">Auto-scored points: {{ score }} / {{ maxScore }}</div>
-      <div class="result-line">Completion: {{ answeredCount }} / {{ questions.length }} responses</div>
-      <button class="retry-btn" @click="restart">Try again</button>
-    </section>
-    <section v-if="finished" class="review-list">
-      <div class="review-heading">Answer Review</div>
-      <div
-        v-for="(q, i) in questions"
-        :key="q.id"
-        class="review-item"
-        :class="reviewStatusClass(q.id)"
-      >
-        <div class="review-item-top">
-          <span class="review-number">Q{{ i + 1 }}</span>
-          <span class="review-status">{{ reviewStatusLabel(q.id) }}</span>
-        </div>
-        <div class="review-prompt" v-html="q.prompt"></div>
-        <div class="review-row">
-          <span class="review-label">Your answer</span>
-          <span class="review-value">{{ results[q.id] ? results[q.id].value : '—' }}</span>
-        </div>
-        <div class="review-row" v-if="['mcq', 'gapfill', 'audio'].includes(q.type)">
-          <span class="review-label">Correct answer</span>
-          <span class="review-value">{{ q.answer }}</span>
-        </div>
-        <div class="review-row" v-if="q.type === 'short_answer' && results[q.id]">
-          <span class="review-label">AI feedback</span>
-          <span class="review-value">{{ results[q.id].detail }}</span>
+
+    <!-- NAME MODAL -->
+    <div v-if="!playerName" class="name-modal-backdrop">
+      <div class="name-modal">
+        <p class="name-modal-kicker">Level {{ level }} Quiz</p>
+        <h2 class="name-modal-title">Who's taking this exam?</h2>
+        <div class="name-options">
+          <button class="name-option" @click="selectName('Ivory')">
+            <span class="name-option-letter">I</span>
+            <span class="name-option-label">Ivory</span>
+          </button>
+          <button class="name-option" @click="selectName('Gin')">
+            <span class="name-option-letter">G</span>
+            <span class="name-option-label">Gin</span>
+          </button>
         </div>
       </div>
-    </section>
+    </div>
+
+    <!-- QUIZ -->
+    <template v-else>
+      <section class="status-card">
+        <div class="status-top">
+          <div>
+            <p class="status-kicker">Now practicing — {{ playerName }}</p>
+            <h3>Level {{ level }} Quiz</h3>
+          </div>
+          <div class="status-stats">
+            <span>{{ answeredCount }} answered</span>
+            <span>{{ questions.length }} total</span>
+          </div>
+        </div>
+        <div class="progress-track" role="progressbar" :aria-valuemin="0" :aria-valuemax="100" :aria-valuenow="progressPercent">
+          <div class="progress-fill" :style="{ width: `${progressPercent}%` }"></div>
+        </div>
+        <p class="progress-text">Question {{ displayQuestionNumber }} of {{ questions.length }}</p>
+      </section>
+
+      <section v-if="current" class="question-shell">
+        <QuestionRenderer :question="current" @answered="onAnswered" />
+      </section>
+
+      <section v-if="feedback" class="feedback-card" :class="feedback.kind">
+        {{ feedback.message }}
+      </section>
+
+      <section class="nav-row" v-if="!finished">
+        <button @click="prev" class="nav-btn" :disabled="index === 0">Previous</button>
+        <button @click="next" class="nav-btn nav-btn-primary" :disabled="index >= questions.length - 1">Next</button>
+      </section>
+
+      <section v-if="finished" class="result-card">
+        <div class="result-title">Quiz Summary</div>
+        <div class="result-line">Player: {{ playerName }}</div>
+        <div class="result-line">Auto-scored points: {{ score }} / {{ maxScore }}</div>
+        <div class="result-line">Completion: {{ answeredCount }} / {{ questions.length }} responses</div>
+        <div class="result-line" v-if="scoreSubmitError">⚠ Score wasn't saved to the leaderboard — check your connection.</div>
+        <router-link to="/leaderboard" class="leaderboard-link">View Leaderboard →</router-link>
+        <button class="retry-btn" @click="restart">Try again</button>
+      </section>
+
+      <section v-if="finished" class="review-list">
+        <div class="review-heading">Answer Review</div>
+        <div
+          v-for="(q, i) in questions"
+          :key="q.id"
+          class="review-item"
+          :class="reviewStatusClass(q.id)"
+        >
+          <div class="review-item-top">
+            <span class="review-number">Q{{ i + 1 }}</span>
+            <span class="review-status">{{ reviewStatusLabel(q.id) }}</span>
+          </div>
+          <div class="review-prompt" v-html="q.prompt"></div>
+          <div class="review-row">
+            <span class="review-label">Your answer</span>
+            <span class="review-value">{{ results[q.id] ? results[q.id].value : '—' }}</span>
+          </div>
+          <div class="review-row" v-if="['mcq', 'gapfill', 'audio'].includes(q.type)">
+            <span class="review-label">Correct answer</span>
+            <span class="review-value">{{ q.answer }}</span>
+          </div>
+          <div class="review-row" v-if="q.type === 'short_answer' && results[q.id]">
+            <span class="review-label">AI feedback</span>
+            <span class="review-value">{{ results[q.id].detail }}</span>
+          </div>
+        </div>
+      </section>
+    </template>
+
   </div>
 </template>
+
 <script setup>
 import { ref, computed, watch, onBeforeUnmount } from 'vue';
 import QuestionRenderer from './QuestionRenderer.vue';
-// ✅ Props definition
+
 const props = defineProps({
   level: { type: String, default: 'A1' },
   questions: { type: Array, default: () => [] }
 });
-// ✅ Reactive state
+
 const index = ref(0);
 const answers = ref({});
 const results = ref({});
@@ -78,21 +110,33 @@ const feedback = ref(null);
 const randomizedQuestions = ref([]);
 const isGrading = ref(false);
 let advanceTimer = null;
-// ✅ Environment-based API URL
+
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-// ✅ Computed values
+
+// Name modal — fixed choices, no free text
+const playerName = ref('');
+const scoreSubmitted = ref(false);
+const scoreSubmitError = ref(false);
+
+function selectName(name) {
+  playerName.value = name;
+}
+
 const questions = computed(() => randomizedQuestions.value);
 const current = computed(() => questions.value[index.value] || null);
 const maxScore = computed(() => questions.value.reduce((s, q) => s + (q.points || 1), 0));
 const finished = computed(() => index.value >= questions.value.length);
 const answeredCount = computed(() => Object.keys(answers.value).length);
-const displayQuestionNumber = computed(() => Math.min(index.value + 1, questions.value.length));
+const displayQuestionNumber = computed(() => {
+  if (questions.value.length === 0) return 0;
+  return Math.min(index.value + 1, questions.value.length);
+});
 const progressPercent = computed(() => {
   if (questions.value.length === 0) return 0;
   const ratio = Math.min(index.value, questions.value.length) / questions.value.length;
   return Math.round(ratio * 100);
 });
-// ✅ Watch for new questions
+
 watch(
   () => props.questions,
   (newQuestions) => {
@@ -102,11 +146,36 @@ watch(
     results.value = {};
     score.value = 0;
     feedback.value = null;
+    scoreSubmitted.value = false;
+    scoreSubmitError.value = false;
     clearAdvanceTimer();
   },
   { immediate: true }
 );
-// ✅ Utility functions
+
+// Submit score to backend exactly once, the moment the quiz finishes
+watch(finished, async (isFinished) => {
+  if (!isFinished || scoreSubmitted.value || !playerName.value) return;
+  scoreSubmitted.value = true;
+
+  try {
+    const res = await fetch(`${API_BASE}/api/submit-score`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: playerName.value,
+        level: props.level,
+        score: score.value,
+        maxScore: maxScore.value
+      })
+    });
+    if (!res.ok) throw new Error('Bad response');
+  } catch (err) {
+    console.error('Failed to submit score:', err);
+    scoreSubmitError.value = true;
+  }
+});
+
 function restart() {
   randomizedQuestions.value = shuffleQuestions(props.questions || []);
   index.value = 0;
@@ -114,8 +183,12 @@ function restart() {
   results.value = {};
   score.value = 0;
   feedback.value = null;
+  scoreSubmitted.value = false;
+  scoreSubmitError.value = false;
   clearAdvanceTimer();
+  playerName.value = ''; // show name modal again on retry
 }
+
 function shuffleQuestions(items) {
   const cloned = [...items];
   for (let i = cloned.length - 1; i > 0; i--) {
@@ -124,12 +197,14 @@ function shuffleQuestions(items) {
   }
   return cloned;
 }
+
 function clearAdvanceTimer() {
   if (advanceTimer) {
     clearTimeout(advanceTimer);
     advanceTimer = null;
   }
 }
+
 function scheduleAdvance(delayMs) {
   clearAdvanceTimer();
   advanceTimer = setTimeout(() => {
@@ -137,6 +212,7 @@ function scheduleAdvance(delayMs) {
     next();
   }, delayMs);
 }
+
 function reviewStatusClass(id) {
   const r = results.value[id];
   if (!r) return 'review-skipped';
@@ -144,6 +220,7 @@ function reviewStatusClass(id) {
   if (r.status === 'wrong') return 'review-wrong';
   return 'review-ungraded';
 }
+
 function reviewStatusLabel(id) {
   const r = results.value[id];
   if (!r) return '⚪ Skipped';
@@ -151,15 +228,17 @@ function reviewStatusLabel(id) {
   if (r.status === 'wrong') return '❌ Wrong';
   return '📝 Not graded';
 }
-// ✅ Main grading logic
+
 async function onAnswered({ id, value }) {
   const q = questions.value.find(x => x.id === id);
   if (!q) return;
+
   answers.value[id] = value;
-  // Auto-scored types
+
   if (['mcq', 'gapfill', 'audio'].includes(q.type)) {
     const normalized = String(value || '').trim().toLowerCase();
     const correct = String(q.answer || '').trim().toLowerCase();
+
     if (normalized === correct) {
       score.value += (q.points || 1);
       feedback.value = { kind: 'ok', message: '✅ Correct!' };
@@ -170,10 +249,10 @@ async function onAnswered({ id, value }) {
     }
     scheduleAdvance(1800);
   }
-  // AI-graded short answers
   else if (q.type === 'short_answer') {
     isGrading.value = true;
     feedback.value = { kind: 'info', message: 'Checking your response…' };
+
     try {
       const res = await fetch(`${API_BASE}/api/check-writing`, {
         method: 'POST',
@@ -185,6 +264,7 @@ async function onAnswered({ id, value }) {
         })
       });
       const data = await res.json();
+
       if (data.passed === true) {
         score.value += (q.points || 1);
         feedback.value = { kind: 'ok', message: `✅ ${data.feedback}` };
@@ -206,7 +286,7 @@ async function onAnswered({ id, value }) {
     }
   }
 }
-// ✅ Navigation
+
 function next() {
   clearAdvanceTimer();
   if (index.value < questions.value.length - 1) index.value++;
@@ -216,13 +296,13 @@ function prev() {
   clearAdvanceTimer();
   if (index.value > 0) index.value--;
 }
+
 onBeforeUnmount(() => clearAdvanceTimer());
 </script>
+
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
-/* ==========================================
-   TOKENS — same as home.vue / topic.vue
-========================================== */
+
 .quiz-player {
   --paper: #f2eee5;
   --ink: #16130e;
@@ -231,6 +311,7 @@ onBeforeUnmount(() => clearAdvanceTimer());
   --yellow: #f5b80c;
   --muted: #6e675b;
   --rule: 2px solid var(--ink);
+
   font-family: "Archivo", sans-serif;
   color: var(--ink);
   max-width: 46rem;
@@ -238,9 +319,103 @@ onBeforeUnmount(() => clearAdvanceTimer());
   display: grid;
   gap: 20px;
 }
-/* ==========================================
-   STATUS CARD
-========================================== */
+
+/* NAME MODAL */
+.name-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(22, 19, 14, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 50;
+}
+
+.name-modal {
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  padding: 40px 36px;
+  max-width: 26rem;
+  width: 100%;
+  text-align: center;
+}
+
+.name-modal-kicker {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+
+.name-modal-title {
+  font-family: "Jost", sans-serif;
+  font-weight: 600;
+  font-size: 1.6rem;
+  margin: 0 0 28px;
+  color: var(--ink);
+}
+
+.name-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.name-option {
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  padding: 24px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.name-option:hover {
+  background: var(--yellow);
+  transform: translateY(-3px);
+}
+
+.name-option:nth-child(2):hover {
+  background: var(--blue);
+  color: var(--paper);
+}
+
+.name-option-letter {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Jost", sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  background: var(--paper);
+}
+
+.name-option:nth-child(1) .name-option-letter {
+  background: var(--yellow);
+}
+
+.name-option:nth-child(2) .name-option-letter {
+  background: var(--blue);
+  color: var(--paper);
+}
+
+.name-option-label {
+  font-family: "Jost", sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+/* STATUS CARD */
 .status-card {
   border: var(--rule);
   background: var(--paper);
@@ -299,15 +474,11 @@ onBeforeUnmount(() => clearAdvanceTimer());
   font-size: 0.82rem;
   color: var(--muted);
 }
-/* ==========================================
-   QUESTION SHELL
-========================================== */
+
 .question-shell {
   background: transparent;
 }
-/* ==========================================
-   FEEDBACK
-========================================== */
+
 .feedback-card {
   border: 2px solid var(--ink);
   padding: 12px 16px;
@@ -329,9 +500,7 @@ onBeforeUnmount(() => clearAdvanceTimer());
   border-color: var(--blue);
   color: var(--blue);
 }
-/* ==========================================
-   NAV BUTTONS
-========================================== */
+
 .nav-row {
   display: flex;
   justify-content: space-between;
@@ -366,13 +535,13 @@ onBeforeUnmount(() => clearAdvanceTimer());
   background: var(--blue);
   border-color: var(--blue);
 }
-/* ==========================================
-   RESULT CARD
-========================================== */
+
 .result-card {
   border: var(--rule);
   background: var(--paper);
   padding: 24px;
+  display: grid;
+  gap: 6px;
 }
 .result-title {
   font-family: "Jost", sans-serif;
@@ -381,22 +550,32 @@ onBeforeUnmount(() => clearAdvanceTimer());
   color: var(--ink);
 }
 .result-line {
-  margin-top: 8px;
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.88rem;
   color: var(--muted);
 }
-.retry-btn {
-  margin-top: 18px;
+.leaderboard-link {
+  margin-top: 10px;
+  font-family: "Jost", sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--blue);
+  text-decoration: none;
+  border-bottom: 2px solid var(--blue);
+  width: fit-content;
+  padding-bottom: 2px;
 }
+.retry-btn {
+  margin-top: 12px;
+  width: fit-content;
+}
+
 .nav-btn:focus-visible,
 .retry-btn:focus-visible {
   outline: 3px solid var(--blue);
   outline-offset: 3px;
 }
-/* ==========================================
-   REVIEW LIST
-========================================== */
+
 .review-list {
   display: grid;
   gap: 14px;
@@ -414,19 +593,10 @@ onBeforeUnmount(() => clearAdvanceTimer());
   padding: 16px 18px;
   border-left-width: 6px;
 }
-.review-correct {
-  border-left-color: var(--yellow);
-}
-.review-wrong {
-  border-left-color: var(--red);
-}
-.review-ungraded {
-  border-left-color: var(--blue);
-}
-.review-skipped {
-  border-left-color: var(--muted);
-  opacity: 0.75;
-}
+.review-correct { border-left-color: var(--yellow); }
+.review-wrong { border-left-color: var(--red); }
+.review-ungraded { border-left-color: var(--blue); }
+.review-skipped { border-left-color: var(--muted); opacity: 0.75; }
 .review-item-top {
   display: flex;
   justify-content: space-between;
@@ -472,9 +642,7 @@ onBeforeUnmount(() => clearAdvanceTimer());
 .review-value {
   color: var(--ink);
 }
-/* ==========================================
-   RESPONSIVE
-========================================== */
+
 @media (max-width: 700px) {
   .status-top {
     align-items: flex-start;
@@ -486,6 +654,9 @@ onBeforeUnmount(() => clearAdvanceTimer());
   .review-label {
     min-width: auto;
     width: 100%;
+  }
+  .name-options {
+    grid-template-columns: 1fr;
   }
 }
 </style>

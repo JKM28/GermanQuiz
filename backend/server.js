@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from "express";
 import cors from "cors";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { createClient } from "@supabase/supabase-js";
 
 const app = express();
 app.use(cors());
@@ -12,6 +13,9 @@ app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
   next();
 });
+
+// Supabase client for storing quiz scores
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 /**
  * Helpers
@@ -234,6 +238,38 @@ Respond with ONLY valid JSON in exactly this shape (use true/false for booleans)
       response.error = err && (err.message || String(err));
     }
     return res.status(200).json(response);
+  }
+});
+
+/**
+ * Save a completed quiz attempt
+ * POST /api/submit-score
+ * Body: { name, level, score, maxScore }
+ */
+app.post("/api/submit-score", async (req, res) => {
+  const { name, level, score, maxScore } = req.body || {};
+
+  if (!name || typeof name !== "string" || !name.trim()) {
+    return res.status(400).json({ error: "name is required" });
+  }
+  if (!level || typeof score !== "number" || typeof maxScore !== "number") {
+    return res.status(400).json({ error: "level, score, and maxScore are required" });
+  }
+
+  const cleanName = name.trim().slice(0, 50);
+
+  try {
+    const { data, error } = await supabase
+      .from("quiz_scores")
+      .insert([{ name: cleanName, level, score, max_score: maxScore }])
+      .select();
+
+    if (error) throw error;
+
+    res.status(200).json({ success: true, entry: data[0] });
+  } catch (err) {
+    console.error("Supabase insert error:", err.message || err);
+    res.status(500).json({ error: "Failed to save score" });
   }
 });
 
