@@ -71,11 +71,7 @@ function extractFirstJsonObject(text) {
 // Extract the first single word answer (useful for "correct"/"wrong").
 function extractFirstWord(text) {
   if (!text || typeof text !== "string") return "";
-  const cleaned = text.replace(/[`"'“”«»
-
-\[\]
-
-\{\}<>]/g, " ").replace(/\s+/g, " ").trim();
+  const cleaned = text.replace(/[`"'""«»\[\]{}<>]/g, " ").replace(/\s+/g, " ").trim();
   const first = cleaned.split(" ")[0] || "";
   return first.toLowerCase();
 }
