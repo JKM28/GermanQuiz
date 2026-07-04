@@ -151,7 +151,7 @@
     "level": "A1",
     "skill": "writing",
     "type": "short_answer",
-    "prompt": "Schreibe 2-3 Satze uber deinen Tagesablauf.",
+    "prompt": "Schreibe 4-5 Satze uber deinen Tagesablauf.",
     "options": [],
     "answer": "",
     "time_limit_seconds": 120,
@@ -160,7 +160,7 @@
       "writing",
       "daily-routine"
     ],
-    "rubric": "A1 level. The student should write 2-3 simple present-tense sentences describing a daily routine (e.g. waking up, eating, going to school/work). Basic vocabulary is expected; minor article or word-order errors are acceptable and should not fail the response."
+    "rubric": "A1 level. The student should write 4-5 simple present-tense sentences describing a daily routine (e.g. waking up, eating, going to school/work). Basic vocabulary is expected; minor article or word-order errors are acceptable and should not fail the response."
   },
   {
     "id": "a2-001",
@@ -641,7 +641,7 @@
     "level": "A1",
     "skill": "writing",
     "type": "short_answer",
-    "prompt": "Schreibe 2-3 Satze uber deine Familie.",
+    "prompt": "Schreibe 4-5 Satze uber deine Familie.",
     "options": [],
     "answer": "",
     "time_limit_seconds": 140,
@@ -650,7 +650,7 @@
       "writing",
       "family"
     ],
-    "rubric": "A1 level. The student should write 2-3 simple sentences describing family members (e.g. names, relationships, where they live). Basic present-tense verbs and simple vocabulary expected."
+    "rubric": "A1 level. The student should write  simple sentences describing family members (e.g. names, relationships, where they live). Basic present-tense verbs and simple vocabulary expected."
   },
   {
     "id": "a2-011",
@@ -1127,7 +1127,7 @@
     "level": "A1",
     "skill": "writing",
     "type": "short_answer",
-    "prompt": "Schreibe 2-3 Satze uber deine Lieblingsstadt.",
+    "prompt": "Schreibe 4-5 Satze uber deine Lieblingsstadt.",
     "options": [],
     "answer": "",
     "time_limit_seconds": 150,
@@ -1135,7 +1135,7 @@
     "tags": [
       "writing"
     ],
-    "rubric": "A1 level. The student should write 2-3 simple sentences about a favorite city, mentioning at least one reason why they like it. Basic vocabulary and present tense expected."
+    "rubric": "A1 level. The student should write 4-5 simple sentences about a favorite city, mentioning at least one reason why they like it. Basic vocabulary and present tense expected."
   },
   {
     "id": "a2-021",
@@ -2535,7 +2535,7 @@
     "level": "A1",
     "skill": "writing",
     "type": "short_answer",
-    "prompt": "Schreibe 2-3 Sätze über dein Lieblingsessen.",
+    "prompt": "Schreibe 4-5 Sätze über dein Lieblingsessen.",
     "options": [],
     "answer": "",
     "time_limit_seconds": 140,
@@ -2544,7 +2544,7 @@
       "writing",
       "food"
     ],
-    "rubric": "A1 level. The student should write 2-3 simple sentences about a favorite food, mentioning what it is and optionally why they like it. Basic present-tense verbs and vocabulary expected."
+    "rubric": "A1 level. The student should write 4-5 simple sentences about a favorite food, mentioning what it is and optionally why they like it. Basic present-tense verbs and vocabulary expected."
   },
   {
     "id": "a2-041",
