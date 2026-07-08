@@ -14,9 +14,19 @@
       <div class="vp-example">Example: {{ question.example }}</div>
     </div>
 
+    <div v-if="isEmailWriting" class="email-card">
+      <div class="email-row">
+        <span class="email-label">To</span>
+        <strong class="email-title">{{ question.recipient }}</strong>
+        <span class="email-tone" :class="question.tone">{{ question.tone }}</span>
+      </div>
+      <div class="email-scenario">{{ question.scenario }}</div>
+    </div>
+
     <div class="question-prompt" v-html="question.prompt"></div>
 
     <p class="question-help" v-if="isVerbPreposition">Choose the English translation of the verb + preposition.</p>
+    <p class="question-help" v-else-if="isEmailWriting">Write your email in the text box below.</p>
     <p class="question-help" v-else-if="question.type === 'mcq'">Choose one answer.</p>
     <p class="question-help" v-else-if="question.type === 'gapfill'">Type one short phrase to complete the blank.</p>
     <p class="question-help" v-else-if="question.type === 'short_answer'">Write 4-5 sentences. This answer is for practice and not auto-scored.</p>
@@ -38,14 +48,16 @@
       <button class="submit-btn" :disabled="!hasInput" @click="submit">Submit answer</button>
     </div>
 
-    <div v-else-if="question.type === 'short_answer'" class="input-block">
+    <div v-else-if="question.type === 'short_answer' || question.type === 'email_writing'" class="input-block">
       <textarea
         v-model="answer"
-        rows="5"
+        rows="6"
         class="answer-input answer-textarea"
-        placeholder="Write your response in German"
+        :placeholder="isEmailWriting ? 'Write your email in German' : 'Write your response in German'"
       ></textarea>
-      <button class="submit-btn" :disabled="!hasInput" @click="submit">Save response</button>
+      <button class="submit-btn" :disabled="!hasInput" @click="submit">
+        {{ isEmailWriting ? 'Send Email' : 'Save response' }}
+      </button>
     </div>
 
     <div v-else-if="question.type === 'audio'" class="input-block">
@@ -75,8 +87,10 @@ const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
 
 const hasInput = computed(() => String(answer.value || '').trim().length > 0);
 const isVerbPreposition = computed(() => props.question?.skill === 'verb-prepositions');
+const isEmailWriting = computed(() => props.question?.type === 'email_writing');
 const typeLabel = computed(() => {
   if (isVerbPreposition.value) return 'Verb + Preposition';
+  if (isEmailWriting.value) return 'Email Writing';
   if (props.question?.type === 'mcq') return 'Multiple Choice';
   if (props.question?.type === 'gapfill') return 'Gap Fill';
   if (props.question?.type === 'short_answer') return 'Short Answer';
@@ -203,6 +217,69 @@ function submit() {
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.85rem;
   color: var(--muted);
+}
+
+/* ==========================================
+   EMAIL WRITING CARD
+========================================== */
+
+.email-card {
+  margin-top: 20px;
+  border-left: 4px solid var(--yellow);
+  padding: 4px 0 4px 18px;
+}
+
+.email-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.email-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.email-title {
+  font-family: "Jost", sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+
+.email-tone {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  border: 2px solid var(--ink);
+  padding: 2px 8px;
+}
+
+.email-tone.formal {
+  background: var(--blue);
+  color: var(--paper);
+}
+
+.email-tone.informal {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.email-tone.semi-formal {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.email-scenario {
+  margin-top: 8px;
+  font-family: "Archivo", sans-serif;
+  font-size: 0.95rem;
+  color: var(--ink);
+  line-height: 1.5;
 }
 
 /* ==========================================

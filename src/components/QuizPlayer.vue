@@ -82,7 +82,7 @@
             <span class="review-label">Correct answer</span>
             <span class="review-value">{{ q.answer }}</span>
           </div>
-          <div class="review-row" v-if="q.type === 'short_answer' && results[q.id]">
+          <div class="review-row" v-if="(q.type === 'short_answer' || q.type === 'email_writing') && results[q.id]">
             <span class="review-label">AI feedback</span>
             <span class="review-value">{{ results[q.id].detail }}</span>
           </div>
@@ -249,7 +249,7 @@ async function onAnswered({ id, value }) {
     }
     scheduleAdvance(1800);
   }
-  else if (q.type === 'short_answer') {
+  else if (q.type === 'short_answer' || q.type === 'email_writing') {
     isGrading.value = true;
     feedback.value = { kind: 'info', message: 'Checking your response…' };
 

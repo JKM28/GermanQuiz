@@ -3898,5 +3898,575 @@
       "storytelling"
     ],
     "rubric": "B1 level. The student should write 4-5 sentences describing a good decision they made and justifying why, using past tense (perfect or preterite) and at least one connector (weil, deshalb, obwohl)."
+  },
+  {
+    "id": "a1-email-01",
+    "level": "A1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You have to cancel meeting a friend for coffee tomorrow.",
+    "recipient": "A friend",
+    "tone": "informal",
+    "prompt": "Write a short message (2-3 sentences) telling your friend you can't meet tomorrow and why.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 150,
+    "points": 2,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A1 level informal message. Should include a greeting, state they can't meet, give a simple reason, and a closing. 2-3 short sentences is enough. Minor grammar errors are fine."
+  },
+  {
+    "id": "a1-email-02",
+    "level": "A1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You want to thank a friend for a birthday gift.",
+    "recipient": "A friend",
+    "tone": "informal",
+    "prompt": "Write a short message (2-3 sentences) thanking your friend for their gift.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 150,
+    "points": 2,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A1 level informal message. Should include a greeting, thank them for a specific gift, say something positive about it, and a closing."
+  },
+  {
+    "id": "a1-email-03",
+    "level": "A1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You are sick and cannot go to class today.",
+    "recipient": "Your teacher",
+    "tone": "semi-formal",
+    "prompt": "Write a short message (2-3 sentences) telling your teacher you are sick and cannot come to class.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 150,
+    "points": 2,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A1 level short message, polite but simple. Should state they are sick, cannot attend today, and a polite closing (e.g. Viele Grüße)."
+  },
+  {
+    "id": "a1-email-04",
+    "level": "A1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You will arrive late to meet a friend.",
+    "recipient": "A friend",
+    "tone": "informal",
+    "prompt": "Write a short message (2-3 sentences) telling your friend you will be late and by how long.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 150,
+    "points": 2,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A1 level informal message. Should state they will be late, roughly how long, and an apology or reason."
+  },
+  {
+    "id": "a1-email-05",
+    "level": "A1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You arrived safely after a trip and want to tell your family.",
+    "recipient": "A family member",
+    "tone": "informal",
+    "prompt": "Write a short message (2-3 sentences) telling your family you arrived safely.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 150,
+    "points": 2,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A1 level informal message. Should state they arrived, mention they are safe/well, and a simple closing."
+  },
+  {
+    "id": "a1-email-06",
+    "level": "A1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You want to invite a friend to your birthday party.",
+    "recipient": "A friend",
+    "tone": "informal",
+    "prompt": "Write a short message (2-3 sentences) inviting your friend to your birthday party.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 150,
+    "points": 2,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A1 level informal message. Should mention the event, give a date or day, and invite them clearly."
+  },
+  {
+    "id": "a1-email-07",
+    "level": "A1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You want to ask a classmate for today's homework because you missed class.",
+    "recipient": "A classmate",
+    "tone": "informal",
+    "prompt": "Write a short message (2-3 sentences) asking your classmate what the homework is.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 150,
+    "points": 2,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A1 level informal message. Should explain they missed class and ask clearly what the homework is."
+  },
+  {
+    "id": "a1-email-08",
+    "level": "A1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You want to wish a friend a happy birthday.",
+    "recipient": "A friend",
+    "tone": "informal",
+    "prompt": "Write a short message (2-3 sentences) wishing your friend a happy birthday.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 150,
+    "points": 2,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A1 level informal message. Should clearly wish them a happy birthday and include one friendly extra sentence."
+  },
+  {
+    "id": "a1-email-09",
+    "level": "A1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You want to ask a friend to recommend a good restaurant.",
+    "recipient": "A friend",
+    "tone": "informal",
+    "prompt": "Write a short message (2-3 sentences) asking your friend for a restaurant recommendation.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 150,
+    "points": 2,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A1 level informal message. Should ask clearly for a restaurant recommendation, optionally mention what kind of food."
+  },
+  {
+    "id": "a1-email-10",
+    "level": "A1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You want to tell a friend about your weekend plans.",
+    "recipient": "A friend",
+    "tone": "informal",
+    "prompt": "Write a short message (2-3 sentences) telling your friend what you are doing this weekend.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 150,
+    "points": 2,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A1 level informal message. Should describe at least one weekend plan using present or future tense."
+  },
+  {
+    "id": "a2-email-01",
+    "level": "A2",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You want to book a hotel room for a weekend trip.",
+    "recipient": "Hotel receptionist",
+    "tone": "formal",
+    "prompt": "Write a short email (3-4 sentences) asking to book a room, including your dates and how many people.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 200,
+    "points": 3,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A2 level semi-formal email. Should include a greeting (Sehr geehrte/r), request a room, give dates, number of guests, and a polite closing (Mit freundlichen Grüßen)."
+  },
+  {
+    "id": "a2-email-02",
+    "level": "A2",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You applied for a job two weeks ago and want to ask about the status.",
+    "recipient": "A company's HR department",
+    "tone": "formal",
+    "prompt": "Write a short email (3-4 sentences) asking about the status of your job application.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 200,
+    "points": 3,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A2 level formal email. Should include a formal greeting, reference the application/date, ask politely for an update, and a formal closing."
+  },
+  {
+    "id": "a2-email-03",
+    "level": "A2",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You need to tell your manager you will work from home tomorrow.",
+    "recipient": "Your manager",
+    "tone": "semi-formal",
+    "prompt": "Write a short email (3-4 sentences) informing your manager you will work from home tomorrow and why.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 200,
+    "points": 3,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A2 level semi-formal email. Should state clearly they'll work from home, give a brief reason, and confirm availability."
+  },
+  {
+    "id": "a2-email-04",
+    "level": "A2",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You want to invite your coworkers to a team lunch.",
+    "recipient": "Coworkers",
+    "tone": "semi-formal",
+    "prompt": "Write a short email (3-4 sentences) inviting your coworkers to a team lunch, including when and where.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 200,
+    "points": 3,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A2 level semi-formal email. Should invite clearly, give a day/time and location, and a friendly closing."
+  },
+  {
+    "id": "a2-email-05",
+    "level": "A2",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "A package you ordered arrived late and slightly damaged.",
+    "recipient": "Customer service",
+    "tone": "formal",
+    "prompt": "Write a short email (3-4 sentences) explaining the problem and what you would like the company to do.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 200,
+    "points": 3,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A2 level formal complaint email. Should state the issue (late/damaged), reference the order if possible, and request a solution (refund/replacement)."
+  },
+  {
+    "id": "a2-email-06",
+    "level": "A2",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "Something in your apartment is broken and needs repair.",
+    "recipient": "Your landlord",
+    "tone": "semi-formal",
+    "prompt": "Write a short email (3-4 sentences) telling your landlord what is broken and asking them to fix it.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 200,
+    "points": 3,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A2 level semi-formal email. Should describe what is broken, ask for repair, and suggest availability for access if needed."
+  },
+  {
+    "id": "a2-email-07",
+    "level": "A2",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You need to reschedule a doctor's appointment.",
+    "recipient": "A doctor's office",
+    "tone": "formal",
+    "prompt": "Write a short email (3-4 sentences) asking to reschedule your appointment to a different day.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 200,
+    "points": 3,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A2 level formal email. Should reference the existing appointment, request a new date, and a polite closing."
+  },
+  {
+    "id": "a2-email-08",
+    "level": "A2",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You want to tell a friend about a weekend trip you took.",
+    "recipient": "A friend",
+    "tone": "informal",
+    "prompt": "Write a short message (3-4 sentences) describing a recent weekend trip.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 200,
+    "points": 3,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A2 level informal message. Should describe where they went and at least one activity, using past tense (perfekt)."
+  },
+  {
+    "id": "a2-email-09",
+    "level": "A2",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You want to ask about the schedule for a language course.",
+    "recipient": "A language school",
+    "tone": "formal",
+    "prompt": "Write a short email (3-4 sentences) asking about course times and start dates.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 200,
+    "points": 3,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A2 level formal email. Should ask clearly about schedule/start date, mention which course/level, and a polite closing."
+  },
+  {
+    "id": "a2-email-10",
+    "level": "A2",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "A friend invited you to a party but you can't go.",
+    "recipient": "A friend",
+    "tone": "informal",
+    "prompt": "Write a short message (3-4 sentences) politely declining the invitation and explaining why.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 200,
+    "points": 3,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "A2 level informal message. Should thank them for the invite, decline politely, give a reason, and suggest meeting another time."
+  },
+  {
+    "id": "b1-email-01",
+    "level": "B1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You are applying for a job you saw advertised online.",
+    "recipient": "A hiring manager",
+    "tone": "formal",
+    "prompt": "Write a formal email (4-5 sentences) applying for the position, briefly mentioning your relevant experience.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 260,
+    "points": 4,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "B1 level formal application email. Should include a formal greeting, state the position being applied for, briefly mention relevant experience/qualification, and a formal closing (Mit freundlichen Grüßen)."
+  },
+  {
+    "id": "b1-email-02",
+    "level": "B1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You had a bad experience during a hotel stay and want to complain.",
+    "recipient": "Hotel management",
+    "tone": "formal",
+    "prompt": "Write a formal complaint email (4-5 sentences) describing the problem and what you expect as a resolution.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 260,
+    "points": 4,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "B1 level formal complaint email. Should clearly describe at least one specific problem, express dissatisfaction professionally, and request a specific resolution (refund, apology, etc.)."
+  },
+  {
+    "id": "b1-email-03",
+    "level": "B1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You need to request a few days of leave from work for a family matter.",
+    "recipient": "Your employer/HR",
+    "tone": "formal",
+    "prompt": "Write a formal email (4-5 sentences) requesting leave, including the dates and a brief reason.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 260,
+    "points": 4,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "B1 level formal request email. Should state the dates requested, give a brief appropriate reason, and ask for approval politely."
+  },
+  {
+    "id": "b1-email-04",
+    "level": "B1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "A company's customer service replied to your complaint, and you want to respond with more details.",
+    "recipient": "Customer service",
+    "tone": "formal",
+    "prompt": "Write a formal follow-up email (4-5 sentences) providing more details about your original complaint.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 260,
+    "points": 4,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "B1 level formal follow-up email. Should reference the previous correspondence, add specific new details, and restate what resolution is expected."
+  },
+  {
+    "id": "b1-email-05",
+    "level": "B1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You have questions about the application process for a university program.",
+    "recipient": "University admissions office",
+    "tone": "formal",
+    "prompt": "Write a formal email (4-5 sentences) asking about application deadlines and required documents.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 260,
+    "points": 4,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "B1 level formal inquiry email. Should ask about deadlines and required documents clearly, and use appropriately formal register throughout."
+  },
+  {
+    "id": "b1-email-06",
+    "level": "B1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "Your lease is ending soon and you want to ask about renewing it.",
+    "recipient": "Your landlord",
+    "tone": "formal",
+    "prompt": "Write a formal email (4-5 sentences) asking about renewing your lease and any changes in terms.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 260,
+    "points": 4,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "B1 level formal email. Should reference the lease ending soon, express interest in renewing, and ask about terms (price, duration)."
+  },
+  {
+    "id": "b1-email-07",
+    "level": "B1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "Your neighbors have been very noisy at night and you want to file a formal complaint with the building management.",
+    "recipient": "Building management",
+    "tone": "formal",
+    "prompt": "Write a formal complaint email (4-5 sentences) describing the noise issue and asking for it to be addressed.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 260,
+    "points": 4,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "B1 level formal complaint email. Should describe the noise problem with some specifics (when/how often), remain professional in tone, and request action."
+  },
+  {
+    "id": "b1-email-08",
+    "level": "B1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You want to ask a former employer for a reference letter.",
+    "recipient": "A former employer",
+    "tone": "formal",
+    "prompt": "Write a formal email (4-5 sentences) politely asking your former employer for a reference letter.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 260,
+    "points": 4,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "B1 level formal request email. Should politely request a reference letter, briefly remind them of your role/time there, and offer to provide more information if needed."
+  },
+  {
+    "id": "b1-email-09",
+    "level": "B1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You want to cancel a subscription service and explain why.",
+    "recipient": "Customer service",
+    "tone": "formal",
+    "prompt": "Write a formal email (4-5 sentences) cancelling your subscription and briefly explaining your reason.",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 260,
+    "points": 4,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "B1 level formal cancellation email. Should clearly request cancellation, give a brief reason, and ask for confirmation of the cancellation."
+  },
+  {
+    "id": "b1-email-10",
+    "level": "B1",
+    "skill": "email-writing",
+    "type": "email_writing",
+    "scenario": "You were invited to a professional conference but need to confirm your attendance and ask a logistical question.",
+    "recipient": "Conference organizer",
+    "tone": "formal",
+    "prompt": "Write a formal email (4-5 sentences) confirming your attendance and asking one logistical question (e.g. about accommodation or schedule).",
+    "options": [],
+    "answer": "",
+    "time_limit_seconds": 260,
+    "points": 4,
+    "tags": [
+      "writing",
+      "email"
+    ],
+    "rubric": "B1 level formal email. Should confirm attendance clearly, ask one specific logistical question, and close politely."
   }
 ]

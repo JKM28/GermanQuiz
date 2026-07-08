@@ -4,17 +4,23 @@ import { createRouter, createWebHistory } from 'vue-router';
 import './index.css';
 
 import App from './App.vue';
-import Home from './pages/Home.vue';
-import Level from './pages/Level.vue';
+import Home from './pages/home.vue';
+import Exam from './pages/exam.vue';
+import TopicVerbPrepositions from './pages/topic.vue';
+import EmailWriting from './pages/EmailWriting.vue';
+import Level from './pages/level.vue';
 
 const routes = [
-  { path: '/', name: 'Home', component: Home },
-  { path: '/level/:level', name: 'Level', component: Level, props: true }
+	{ path: '/', name: 'Home', component: Home },
+	{ path: '/exam', name: 'Exam', component: Exam },
+	{ path: '/topic/verb-prepositions', name: 'TopicVerbPrepositions', component: TopicVerbPrepositions },
+	{ path: '/email-writing', name: 'EmailWriting', component: EmailWriting },
+	{ path: '/level/:level', name: 'Level', component: Level, props: true }
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes
+	history: createWebHistory(),
+	routes
 });
 
 const app = createApp(App);

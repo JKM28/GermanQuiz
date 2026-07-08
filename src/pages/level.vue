@@ -39,15 +39,31 @@ const activeSkill = computed(() => {
   return route.query.skill.trim().toLowerCase();
 });
 const isVerbPrepositions = computed(() => activeSkill.value === 'verb-prepositions');
-const pageTitle = computed(() => (isVerbPrepositions.value ? `Verb + Prepositions • ${props.level}` : `Level ${props.level}`));
+const isEmailWriting = computed(() => activeSkill.value === 'email-writing');
+const pageTitle = computed(() => {
+  if (isVerbPrepositions.value) return `Verb + Prepositions • ${props.level}`;
+  if (isEmailWriting.value) return `Email Writing • ${props.level}`;
+  return `Level ${props.level}`;
+});
 const subtitle = computed(() => {
   if (isVerbPrepositions.value) {
     return 'Check the verb, case, and example sentence, then choose the English translation.';
   }
+  if (isEmailWriting.value) {
+    return 'Read the scenario, then write an email in German. Your response is graded by AI for tone, structure, and clarity.';
+  }
   return 'Local quiz (no auth). Questions are loaded from public/data/Questions.json.';
 });
-const backLink = computed(() => (isVerbPrepositions.value ? '/topic/verb-prepositions' : '/'));
-const backLinkLabel = computed(() => (isVerbPrepositions.value ? 'Back to Verb + Prepositions' : 'Back to home'));
+const backLink = computed(() => {
+  if (isVerbPrepositions.value) return '/topic/verb-prepositions';
+  if (isEmailWriting.value) return '/email-writing';
+  return '/';
+});
+const backLinkLabel = computed(() => {
+  if (isVerbPrepositions.value) return 'Back to Verb + Prepositions';
+  if (isEmailWriting.value) return 'Back to Email Writing';
+  return 'Back to home';
+});
 const levelClass = computed(() => {
   if (props.level === 'A1') return 'pill-a1';
   if (props.level === 'A2') return 'pill-a2';
